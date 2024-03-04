@@ -5,6 +5,10 @@ import Navbar from "./Components/navbar";
 import MainPage from "./Components/MainPage/mainPage";
 import Profile from "./Components/Profile/profile";
 import Sidebar from "./Components/Sidebar/sideBar";
+import It from './Components/Types/it'
+import Medicine from './Components/Types/medicine'
+import Sport from './Components/Types/sport'
+import Other from './Components/Types/other'
 
 import { gapi } from "gapi-script";
 
@@ -32,7 +36,7 @@ const userId =
 
   return (
     <>
-      <Navbar  blur={blur} />
+      <Navbar blur={blur} setBlur={setBlur}  />
       <div className="hidden md:inline">
 
       <Sidebar  blur={blur} />
@@ -41,6 +45,10 @@ const userId =
       <Routes>
         <Route path="/profile" element={<Profile   blur={blur} setBlur={setBlur}  clientId={userId} />} />
         <Route path="/" element={<MainPage />} />
+        <Route path='/it' element={<It/>} />
+        <Route path="/medicine" element={<Medicine />} />
+        <Route path="/sport" element={<Sport />} />
+        <Route path="/others" element={<Other />} /> 
       </Routes>
     </>
   );

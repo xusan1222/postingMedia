@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import Login from "../login";
 import Logout from "../logout";
 import PostingComponent from "./postingComponent";
+import OwnPosts from './ownPosts'
+import SavedPosts from './savedPosts'
 
-import Box from "@mui/material/Box";
+
+// import { Box } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -13,17 +17,20 @@ import TabPanel from "@mui/lab/TabPanel";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 
 import Logo from "../images/Logo.png";
 
 export default function profile({ clientId, blur, setBlur }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState();
-  const [userName, setUserName] = useState();
-  const [img, setImg] = useState();
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [img, setImg] = useState('');
 
-
+  // const handleInfo = (info) => {
+  //   setUserEmail(info.email);
+  //   setUserName(info.name);
+  //   setImg(info.imageUrl);
+  // };
 
   useEffect(() => {
     const handleSignInChange = (signedIn) => {
@@ -38,9 +45,16 @@ export default function profile({ clientId, blur, setBlur }) {
           const auth2 = gapi.auth2.getAuthInstance();
           handleSignInChange(auth2.isSignedIn.get());
           auth2.isSignedIn.listen(handleSignInChange);
+          // const auth = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          const info = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          // handleInfo(auth);
+          setUserEmail(info.email);
+          setUserName(info.name);
+          setImg(info.imageUrl);
         });
     });
-  }, [clientId]);
+  }, [] || [window.location.pathname] || [clientId] );
+  // }, clientId );
 
   const [value, setValue] = React.useState("1");
 
@@ -70,11 +84,11 @@ export default function profile({ clientId, blur, setBlur }) {
         {isSignedIn ? (
           <div>
             <div className="flex lg:justify-between flex-col lg:flex-row w-[100%]">
-              <div className="flex ">
-                <img src={Logo} alt="" className="h-8 w-8 rounded-full mr-4" />
+              <div className="flex items-center">
+                <img src={img} alt="" className="h-8 w-8 rounded-full mr-4" />
                 <div>
-                  <h4>Xusan Ibragimov</h4>
-                  <span>nimadrla bilan shugullanadi </span>
+                  <h4>{userName}</h4>
+                  <span>{userEmail} </span>
                 </div>
               </div>
               <div>
@@ -103,6 +117,7 @@ export default function profile({ clientId, blur, setBlur }) {
               </div>
             </div>
             <div className=" mt-[5%]">
+              
               <Box sx={{ typography: "body1" }}>
                 <TabContext value={value}>
                   <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -117,8 +132,8 @@ export default function profile({ clientId, blur, setBlur }) {
                       </TabList>
                     </div>
                   </Box>
-                  <TabPanel value="1">Posts </TabPanel>
-                  <TabPanel value="2">Saved</TabPanel>
+                  <TabPanel value="1"><OwnPosts /> </TabPanel>
+                  <TabPanel value="2"><SavedPosts /></TabPanel>
                 </TabContext>
               </Box>
               <Logout />

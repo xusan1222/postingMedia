@@ -35,16 +35,11 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-     <button className='h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400'>IT</button>
+    <button className='h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400'>IT</button>
       <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Medicine</button>
       <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
-      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Sport</button>
+      <button className="h-12 border-2 border-blue-400 w-[90%] rounded-md m-2 bg-blue-600 text-white hover:bg-white hover:text-blue-400">Other...</button>
+      
     </Box>
   );
   return (

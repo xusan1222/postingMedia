@@ -1,9 +1,8 @@
-import React, { use, useEffect, useState } from "react";
-
+import React, { useEffect, useState } from 'react'
 
 import Logo from "../images/Logo.png";
-import Comment from "./comment";
-import Comments from "./comments";
+import Comment from "../MainPage/comment";
+import Comments from "../MainPage/comments";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -13,12 +12,13 @@ import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import ReplyIcon from '@mui/icons-material/Reply';
 
-import { allPosts } from "../allPosts";
+// import { allPosts } from "../allPosts";
 
 import { db } from "../../firebase";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 
-export default function post() {
+
+export default function other() {
   const clientId =
   "667176894625-dmjjs60hb5e9ekj17ibskpq2gqvg5ikr.apps.googleusercontent.com";
   const [isComment, setIsComment] = useState(false);
@@ -28,11 +28,11 @@ export default function post() {
   const [userName, setUserName] = useState("");
   const [img, setImg] = useState("");
 
-  const handleInfo = (info) => {
-    setUserEmail(info.email);
-    setUserName(info.name);
-    setImg(info.imageUrl);
-  };
+  // const handleInfo = (info) => {
+  //   setUserEmail(info.email);
+  //   setUserName(info.name);
+  //   setImg(info.imageUrl);
+  // };
   useEffect(() => {
     gapi.load("client:auth2", () => {
       gapi.client
@@ -40,9 +40,12 @@ export default function post() {
           clientId,
         })
         .then(() => {
-          const auth2 = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
-
-          handleInfo(auth2);
+          // const auth2 = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          const info = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          setUserEmail(info.email);
+          setUserName(info.name);
+          setImg(info.imageUrl);
+          // handleInfo(auth2);
         });
     });
   }, [clientId]);
@@ -67,11 +70,12 @@ export default function post() {
     const url = window.location.href;
     navigator.clipboard.writeText(url)
     }
-  // const postId = 'rH4VIm1G7u9vuAykVlxP'  // console.log(isComment)
+
   return users.map((user) => (
-    <div
+    user.Content.type === 'Other' &&(
+      <div
       key={user.id}
-      className="p-4 bg-white rounded shadow-md mx-auto md:w-[55%] md:mt-[15%] w-[80%]  border-2 border-sky-200 mt-[20%] lg:mt-[5%] "
+      className="p-4 bg-white rounded shadow-md mx-auto md:w-[50%] md:mt-[15%] w-[80%]  border-2 border-sky-200 mt-[20%] lg:mt-[5%] "
     >
       <div className="profileInfo flex items-center   justify-between p-4">
         <div className="flex items-center ">
@@ -86,12 +90,12 @@ export default function post() {
         </div>
         {/* this is posted time */}
         <p className="items-end ">
-          <span className=" hidden md:inline">posted</span> {user.Content.time.hour}:{user.Content.time.minute}
+          posted {user.Content.time.hour}:{user.Content.time.minute}
         </p>
       </div>
       <hr color="black" />
       <div className="mx-auto w-[80%]">
-        <h1 className="font-bold text-2xl">{user.Content.type}</h1>
+        <h1>topic</h1>
         <p className="tracking-tight">
           {user.Content.post}
           {/* {user.Content.id} */}
@@ -126,5 +130,7 @@ export default function post() {
       )}
       <Comments id={user.id}/>
     </div>
-  ));
+  
+    )
+ ));
 }

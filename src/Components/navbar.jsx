@@ -15,6 +15,9 @@ const clientId = "667176894625-dmjjs60hb5e9ekj17ibskpq2gqvg5ikr.apps.googleuserc
 export default function navbar(blur) {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const lokatsiya = useLocation()
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [img, setImg] = useState('');
   
   const profilePageCreate = lokatsiya.pathname === "/profile"
 
@@ -31,9 +34,16 @@ export default function navbar(blur) {
           const auth2 = gapi.auth2.getAuthInstance();
           handleSignInChange(auth2.isSignedIn.get());
           auth2.isSignedIn.listen(handleSignInChange);
+          // const auth = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          const info = gapi.auth2.getAuthInstance().currentUser.le.profileObj;
+          // handleInfo(auth);
+          setUserEmail(info.email);
+          setUserName(info.name);
+          setImg(info.imageUrl);
         });
-      });
-    }, [clientId]);
+    });
+  }, [] || [window.location.pathname] || [clientId] );
+  // }, clientId );
     
   return (
       <nav className={blur.blur ? 'bg-blue-900 text-white p-4 flex justify-between items-center fixed top-0 z-10 w-full h-[10%] blur' : 'bg-blue-900 text-white p-4 flex justify-between items-center fixed top-0 z-10 w-full h-[10%]'}>
@@ -51,12 +61,12 @@ export default function navbar(blur) {
       <div className="flex items-center">
         <Link to='/profile'>
         {/* User Name */}
-        <span className=" mr-2 hidden md:inline  ">userName</span>
+        <span className=" mr-2 hidden md:inline  ">{userName}</span>
 
         {/* User Profile Picture */}
               </Link>
               <Link to='/profile'>
-        <img src={Logo} alt="Profile" className="h-8 w-8 rounded-full mr-4" />
+        <img src={img} alt="Profile" className="h-8 w-8 rounded-full mr-4" />
         {/* Profile Button */}
               </Link>
         {isSignedIn ? (
